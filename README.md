@@ -1,2 +1,2 @@
-# midtermFall2023_ShirleyL
+# MidtermFall2023_ShirleyL
 Midterm for Creative Coding Course
