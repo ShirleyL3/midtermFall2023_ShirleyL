@@ -1,50 +1,54 @@
 // changing gradient in the back 
-// food shapes: strawberry, grapes, cheese 
+// food shapes: strawberry, cheese 
 // bite effect on fruit 
 // yummy face? smiley with tounge?
 
-
-// let dim;
-
-// function setup() {
-//   createCanvas(800,800);
-//   background(255);
-//   colorMode(HSB, 360, 100, 100);
-//   dim = width /2
-//   noStroke();
-//   ellipseMode(RADIUS);
-//   frameRate(1);
-// }
-
-// function draw() {
-//   background(0);
-//   for (let x = 0; x <= width; x += dim) {
-//     drawGradient(x, height / 2);
-//   }
-// }
-
-// function drawGradient(x, y) {
-//   let radius = dim / 2;
-//   let h = random(0, 360);
-//   for (let r = radius; r > 0; --r) {
-//     fill(h, 90, 90);
-//     ellipse(x, y, r, r);
-//     h = (h + 1) % 360;
-//   }
-// }\
-
+var color = {
+  r :255,
+  g :0,
+  b :0,
+}
 let x;
 let y;
 
+function setup() {
+  createCanvas(800,800);
+}
+
+function draw() {
+  r = map(mouseX, 0, width, 0, 255);
+  g = map(mouseX, 0, width, 255, 50);
+  b = map(mouseY, 0, width, 255, 50);
+
+  background(r, g, b);
+  ratatouille(mouseX, mouseY);
+  
+
+}
+
+function color_dots(){
+  for (var i = 0; i<50; i++){
+    var posx = random(width);
+    var posy = random(height);
+    var r = random(10,30);
+    color.r = random(100,255);
+    color.g = random(255);
+    color.b = 0;
+    fill(col.r, col.g, col.b, 100);
+    noStroke();
+    ellipse(posx, posy, r);
+  }
+
+}
 
 function strawberry(x, y){ // Strawberry shape
-noStroke();
-fill("#E81062");
-triangle(x, y, x +50, y +100, x +100, y);
-fill("#2AEA7D");
-triangle(x +30, y, x+28, y-25, x+50, y);
-triangle(x +40, y, x+50, y-30, x+60, y);
-triangle(x+50, y, x+70, y-25, x+70, y);
+  noStroke();
+  fill("#E81062");
+  triangle(x, y, x +50, y +100, x +100, y);
+  fill("#2AEA7D");
+  triangle(x +30, y, x+28, y-25, x+50, y);
+  triangle(x +40, y, x+50, y-30, x+60, y);
+  triangle(x+50, y, x+70, y-25, x+70, y);
 }
 
 function cheese(x, y){ //Cheese Shape
@@ -64,37 +68,11 @@ function bite(x,y){ // Bite Mark
   circle(x+5, y +60, 50);
 }
 
-function ratatouille(){ // Ratatouille Shape
-
+function ratatouille(x, y){ // Ratatouille Mouse Shape
+  fill("#A8A8A8");
+  ellipse(x, y, 50, 70);
+  fill("#EEA8A8")
+  circle(x, y-40, 15);
+  stroke("#EEA8A8");
+  bezier(x, y+34, x, y+80, x-10, y+82, x-12, y+85);
 }
-
-
-
-let startColor = 255;
-let speedAnimate = 1.5;
-function setup() {
-  noStroke();
-  createCanvas(800,800);
-}
-
-function draw() {
-  background(255);
-  strawberry(100,100);
-  cheese(200,200);
-  bite(400,400);
-}
-
-  // if(startColor > width + 255 || startColor < 255) {
-  //   speedAnimate *= -1;
-  // }
-  // startColor += speedAnimate;
-  
-  // let gap = -12;
-  // let numRectangles = 30;
-  // let rectWidth = width / numRectangles;
-  // for (let x = 0; x < width; x += gap + rectWidth) {
-  //   let green = startColor - x;
-  //   let red = 255;
-  //   fill(red, green, 0);
-  //   rect(x, 0, rectWidth, height)
-  // }
