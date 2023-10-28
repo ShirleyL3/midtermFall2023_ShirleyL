@@ -9,7 +9,7 @@ var col = {
 }
 let x;
 let y;
-let strawberrys =[];
+let strawberrys = [];
 let cheeses = []
 let cheese1;
 let scene = 1;
@@ -17,61 +17,78 @@ let strawberry1;
 
 function setup() {
   createCanvas(800,800);
-  // cheese1 = new Cheese(0,350);
-  // strawberry1 = new Strawberry(800,350);
 
-  for (let i=0; i<10; i++){
+  for (let i =0; i<10; i++){ // adds new objects to strawberrys array at different positions
     x = random(width);
     y = random(height);
     strawberrys[i] = new Strawberry(x,y);
-    cheeses[i] = new Cheese(x,y);
   }
-  
+  for (let i = 0; i<10; i++){// adds new objects to cheeses array at different positions
+    x = random(width);
+    y = random(height);
+    cheeses[i] = new Cheese(x,y);
+  } 
 }
 
 function draw() {
-  background(0);
-
-  for (let i = 0; i < strawberrys.length; i++){
-    strawberrys[i].move();
-    strawberrys[i].display()
-    cheeses[i].move();
-    cheeses[i].display()
+  if (scene == 1 ){
+    background(0);
+    for (let i = 0; i < strawberrys.length; i++){ //iterates through Array and displays and moves objects
+    // could be " strawberrys.length" or "cheeses.length" bc they are the same length
+      cheeses[i].move();
+      cheeses[i].display();
+      strawberrys[i].move();
+      strawberrys[i].display();
+    
+ 
+      var d = dist(cheeses[i].x, cheeses[i].y, strawberrys[i].x, strawberrys[i].y);//calculates distance
+      
+    if ( d < cheeses[i].r + strawberrys[i].r){ // if a cheese and strawberry are touching then change coloruses radius distance to check
+        cheeses[i].changecol();
+        strawberrys[i].changecol();
+    }
+    }
   }
 
-  // strawberry1.display();
-  //   cheese1.display();
-  //   for (x = 0; x< 400; x ++){
-  //     frameRate(7);
-  //     strawberry1.move();
-  //   }
-  //   for (x = width; x> 400; x--){
-  //     cheese1.move();
-  //   }
-  //   if (cheese1.touches(strawberry1)){
-  //     cheese1.changecol();
-  //     strawberry1.changecol();
-  //   }else{
-      
-  //   }
+   
+ 
+  if (scene == 2){// calls flavor_dots function with chef_ratatouille
+    flavor_dots();
+    chef_ratatouille();
+  }
+}
 
-  
-  // if (scene == 1){// calls flavor_dots function
-  //   flavor_dots();
-    
+
+  ///IDK IF I WILL INCLUDE
+  // if (scene == 3){
+  //   rainbow();
+    // push();
+    //   translate(mouseX, mouseY);
+
+    //   if (scene == 2){
+    //     r = map(mouseX, 0, width, 0, 255);
+    //     g = map(mouseX, 0, width, 255, 50);
+    //     b = map(mouseY, 0, width, 255, 50);
+
+    //     background(r, g, b);
+    //     ratatouille(0, 0);
+    //   }
+    // pop();
   // }
-  //   push();
-  //     translate(mouseX, mouseY);
 
-  //     if (scene == 2){
-  //       r = map(mouseX, 0, width, 0, 255);
-  //       g = map(mouseX, 0, width, 255, 50);
-  //       b = map(mouseY, 0, width, 255, 50);
+function rainbow(){
+  push();
+      translate(mouseX, mouseY);
 
-  //       background(r, g, b);
-  //       ratatouille(0, 0);
-  //     }
-  //   pop();
+      if (scene == 2){
+        r = map(mouseX, 0, width, 0, 255);
+        g = map(mouseX, 0, width, 255, 50);
+        b = map(mouseY, 0, width, 255, 50);
+
+        background(r, g, b);
+        ratatouille(0, 0);
+      }
+    pop();
 }
 
 
@@ -79,16 +96,13 @@ function flavor_dots(){ // Make a red/yellow toned Dotted background
   frameRate(6);
   x = random(width);
   y = random(height);
-  r = random(15,50);
+  r = random(20,60);
   col.r = random(100,255);
   col.g = random(100);
   col.b = 0;
-  fill(col.r, col.g, col.b, 130);
+  fill(col.r, col.g, col.b, 140);
   noStroke();
   ellipse(x, y, r);
-}
-
-function donut(x,y){ // Donut Shape
 }
 
 function bite(x,y){ // Bite Mark 
@@ -99,12 +113,27 @@ function bite(x,y){ // Bite Mark
 }
 
 function ratatouille(x, y){ // Ratatouille Mouse Shape
-  fill("#A8A8A8");
+  fill("#A8A8A8"); //Grey
   ellipse(x, y, 50, 70);
-  fill("#EEA8A8")
+  fill("#EEA8A8") //pink
   circle(x, y-40, 15);
-  stroke("#EEA8A8");
+  stroke("#EEA8A8"); //pink
   bezier(x, y+34, x, y+80, x-10, y+82, x-12, y+85);
+}
+
+function chef_ratatouille(){
+  fill("#EEA8A8"); //pink ears
+  circle(520,600, 100);
+  circle(360, 600, 100);
+  fill(255); // white
+  rect(400, 500, 80, 120);
+  circle(400, 500, 60);
+  circle(440, 480, 60);
+  circle(480, 500, 60);
+  fill("#A8A8A8"); // gray
+  ellipse(440,740,200,300);
+  fill("#EEA8A8"); //pink nose
+  circle(440,680,40);
 }
 
 class Cheese{ // Cheese Class
@@ -116,6 +145,7 @@ class Cheese{ // Cheese Class
     this.col2 = color(235,190,26);// Darker Yellow
   }
   display(){ //Displays Cheese Shape
+    noStroke();
     fill(this.col);
     triangle(this.x, this.y, this.x +130, this.y+30, this.x+ 130, this.y- 20);
     fill(this.col2);
@@ -132,7 +162,7 @@ class Cheese{ // Cheese Class
     this.col2 = color(random(255), random(255), random(255),120);
   }
   touches(food){// checks if cheese is intersting with any other food
-    var d = dist(cheese1.x, cheese1.y, food.x, food.y);
+    var d = dist(this.x, this.y, food.x, food.y);
     if ( d < this.r + food.r){
       return true;
     }else{
@@ -141,13 +171,13 @@ class Cheese{ // Cheese Class
   }
 }
 
-class Strawberry  { // Strawberry Class
+class Strawberry{ // Strawberry Class
   constructor(x,y){
     this.x = x;
     this.y = y;
     this.r = 55;
-    this.col = color(149,0,0,120);//Red
-    this.col2 = color(41,183, 84, 160); // Green
+    this.col = color(149,0,0);//Red
+    this.col2 = color(41,183, 84); // Green
   }
   display(){ //Displays strawberry Shape
     noStroke();
@@ -168,31 +198,22 @@ class Strawberry  { // Strawberry Class
     this.col = color(random(255), random(255), random(255));
     this.col2 = color(random(255), random(255), random(255));
   }
+  
 }
 
 function keyPressed(){ //Changes Scene
   scene ++;
-  if (scene > 3){
+  if (scene ==1){
     background(0);
-    scene = 1;
+  }
+  if (scene ==2){
+    background(0);
+  }
+  // background(0);// resets background before eavery scene
+  if (scene > 4){
+    scene = 1;// resets to first scene
   }
 }
-
-
-//void case5() { //places various of the shape in different areas and sizes
-//  float r=random(255);
-//  float g=random(255);
-//  float b=random(255);
-//  fill(r, g, b);
 //  float s=random(3);
 //  scale(s);
-//  float m=mouseX-85+random(-10,10);
-//  float n=mouseY-65+random(-10,10);
-//  //println(mouseX/800, mouseY);
 //  rotate(random(6.28));
-//  if (mousePressed) {
-  
-//    myCluster(m,n);
-//    println(m,n);
-//  }
-//}
