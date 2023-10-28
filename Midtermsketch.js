@@ -10,10 +10,12 @@ var col = {
 }
 let x;
 let y;
+let strawberry1;
 
 function setup() {
   createCanvas(800,800);
   background(0);
+  strawberry1 = new Strawberry(200,200);
 }
 
 function draw() {
@@ -24,11 +26,13 @@ function draw() {
   // background(r, g, b);
   // ratatouille(mouseX, mouseY);
 
-  flavor_dots();
+  // flavor_dots();
+  strawberry1.display();
+  
 
 }
 
-function flavor_dots(){
+function flavor_dots(){ // Make a red/yellow toned Dotted background
   frameRate(6);
   x = random(width);
   y = random(height);
@@ -41,15 +45,7 @@ function flavor_dots(){
   ellipse(x, y, r);
 }
 
-function strawberry(x, y){ // Strawberry shape
-  noStroke();
-  fill("#E81062");
-  triangle(x, y, x +50, y +100, x +100, y);
-  fill("#2AEA7D");
-  triangle(x +30, y, x+28, y-25, x+50, y);
-  triangle(x +40, y, x+50, y-30, x+60, y);
-  triangle(x+50, y, x+70, y-25, x+70, y);
-}
+// 
 
 function cheese(x, y){ //Cheese Shape
   fill("#EAE123");
@@ -75,6 +71,25 @@ function ratatouille(x, y){ // Ratatouille Mouse Shape
   circle(x, y-40, 15);
   stroke("#EEA8A8");
   bezier(x, y+34, x, y+80, x-10, y+82, x-12, y+85);
+}
+
+class Strawberry { // Strawberry Class
+  constructor(x,y){
+    this.x = x;
+    this.y = y;
+  }
+  display(){
+    noStroke();
+    fill("#E81062");
+    triangle(this.x, this.y, this.x +50, this.y +100, this.x +100, this.y);
+    fill("#2AEA7D");
+    triangle(this.x +30, this.y, this.x+28, this.y-25, this.x+50, this.y);
+    triangle(this.x +40, this.y, this.x+50, this.y-30, this.x+60, this.y);
+    triangle(this.x+50, this.y, this.x+70, this.y-25, this.x+70, this.y);
+  }
+  
+
+
 }
 
 //void case5() { //places various of the shape in different areas and sizes
