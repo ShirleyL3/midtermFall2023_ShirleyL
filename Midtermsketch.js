@@ -9,11 +9,10 @@ var col = {
 }
 let x;
 let y;
-let strawberrys = [];
-let cheeses = [];
-let scene = 1;
 let berry;
-
+let scene = 1;
+let cheeses = [];
+let strawberrys = [];
 
 function setup() {
   createCanvas(800,800);
@@ -212,13 +211,10 @@ class Strawberry{ // Strawberry Class
 
 function keyPressed(){ //Changes Scene
   scene ++;
-  if (scene ==1){
+
+  if (scene ==2){ //resets background before scene 2
     background(0);
   }
-  if (scene ==2){
-    background(0);
-  }
-  // background(0);// resets background before eavery scene
   if (scene > 4){
     scene = 1;// resets to first scene
   }
