@@ -10,19 +10,21 @@ var col = {
 let x;
 let y;
 let strawberrys = [];
-let cheeses = []
-let cheese1;
+let cheeses = [];
 let scene = 1;
-let strawberry1;
+let berry;
+
 
 function setup() {
   createCanvas(800,800);
+  berry = new Strawberry(30,40);
 
   for (let i =0; i<10; i++){ // adds new objects to strawberrys array at different positions
     x = random(width);
     y = random(height);
     strawberrys[i] = new Strawberry(x,y);
   }
+
   for (let i = 0; i<10; i++){// adds new objects to cheeses array at different positions
     x = random(width);
     y = random(height);
@@ -41,7 +43,7 @@ function draw() {
       strawberrys[i].display();
     
  
-      var d = dist(cheeses[i].x, cheeses[i].y, strawberrys[i].x, strawberrys[i].y);//calculates distance
+    var d = dist(cheeses[i].x, cheeses[i].y, strawberrys[i].x, strawberrys[i].y);//calculates distance
       
     if ( d < cheeses[i].r + strawberrys[i].r){ // if a cheese and strawberry are touching then change coloruses radius distance to check
         cheeses[i].changecol();
@@ -50,47 +52,46 @@ function draw() {
     }
   }
 
-   
- 
   if (scene == 2){// calls flavor_dots function with chef_ratatouille
     flavor_dots();
     chef_ratatouille();
   }
+
+  if (scene == 3){ //Huge strawberry getting bit
+    background(0);
+    berry.huge();
+    mousePressed();
+   }
 }
 
+function mousePressed(){
+  if (scene ==3){
+    eat();
+  }
+}
 
-  ///IDK IF I WILL INCLUDE
-  // if (scene == 3){
-  //   rainbow();
-    // push();
-    //   translate(mouseX, mouseY);
-
-    //   if (scene == 2){
-    //     r = map(mouseX, 0, width, 0, 255);
-    //     g = map(mouseX, 0, width, 255, 50);
-    //     b = map(mouseY, 0, width, 255, 50);
-
-    //     background(r, g, b);
-    //     ratatouille(0, 0);
-    //   }
-    // pop();
-  // }
-
-function rainbow(){
+function eat(){ // variety of bite marks based on position
   push();
-      translate(mouseX, mouseY);
-
-      if (scene == 2){
-        r = map(mouseX, 0, width, 0, 255);
-        g = map(mouseX, 0, width, 255, 50);
-        b = map(mouseY, 0, width, 255, 50);
-
-        background(r, g, b);
-        ratatouille(0, 0);
-      }
-    pop();
+  
+  translate(mouseX, mouseY);
+  if ((mouseX< 400) && (mouseY<=400)){ //Top Left
+    scale(2);
+    bite(0,0);
+  } 
+  if ((mouseX > 400 )&& (mouseY<=400)){ //Top Right
+    scale(0.5);
+    bite(0,0);
+  } 
+  if ((mouseX< 400) && (mouseY>=400)){ //Bottom Left
+    scale(3);
+    bite(0,0);
+  }
+  if((mouseX> 400) && (mouseY>=400)){ //Bottom Right
+    bite(0,0);
+  }
+  
+pop();
 }
-
 
 function flavor_dots(){ // Make a red/yellow toned Dotted background
   frameRate(6);
@@ -106,10 +107,15 @@ function flavor_dots(){ // Make a red/yellow toned Dotted background
 }
 
 function bite(x,y){ // Bite Mark 
-  fill("#222222");
+  noStroke();
+  fill(255);
   circle(x,y, 50);
-  circle(x-10, y +30, 50);
-  circle(x+5, y +60, 50);
+  circle(x-30, y +20, 50);
+  circle(x+30, y +15, 50);
+  circle(x-30, y+50, 50);
+  circle(x, y+70, 50);
+  circle(x+30, y +50, 50);
+  circle(x,y +30,50);
 }
 
 function ratatouille(x, y){ // Ratatouille Mouse Shape
@@ -198,7 +204,10 @@ class Strawberry{ // Strawberry Class
     this.col = color(random(255), random(255), random(255));
     this.col2 = color(random(255), random(255), random(255));
   }
-  
+  huge(){// makes strawberry bigger calling the display method
+    scale(5.0);
+    this.display();
+  }
 }
 
 function keyPressed(){ //Changes Scene
@@ -214,6 +223,4 @@ function keyPressed(){ //Changes Scene
     scene = 1;// resets to first scene
   }
 }
-//  float s=random(3);
-//  scale(s);
 //  rotate(random(6.28));
