@@ -41,7 +41,6 @@ function draw() {
       strawberrys[i].move();
       strawberrys[i].display();
     
- 
     var d = dist(cheeses[i].x, cheeses[i].y, strawberrys[i].x, strawberrys[i].y);//calculates distance
       
     if ( d < cheeses[i].r + strawberrys[i].r){ // if a cheese and strawberry are touching then change coloruses radius distance to check
@@ -57,8 +56,6 @@ function draw() {
   }
 
   if (scene == 3){ //Huge strawberry getting bit
-    background(0);
-    berry.huge();
     mousePressed();
    }
 }
@@ -74,21 +71,24 @@ function eat(){ // variety of bite marks based on position
   
   translate(mouseX, mouseY);
   if ((mouseX< 400) && (mouseY<=400)){ //Top Left
-    scale(2);
+    print("1");
+    scale(1.2 );
     bite(0,0);
   } 
-  if ((mouseX > 400 )&& (mouseY<=400)){ //Top Right
+  if ((mouseX > 400 ) && (mouseY<=400)){ //Top Right
+    print("2");
     scale(0.5);
-    bite(0,0);
-  } 
+    bite(0,0);  } 
   if ((mouseX< 400) && (mouseY>=400)){ //Bottom Left
-    scale(3);
+    print("3");
+    scale(0.7);
     bite(0,0);
   }
   if((mouseX> 400) && (mouseY>=400)){ //Bottom Right
+    print("4");
     bite(0,0);
   }
-  
+  print("mouseX", mouseX, "mouseY", mouseY);
 pop();
 }
 
@@ -107,7 +107,7 @@ function flavor_dots(){ // Make a red/yellow toned Dotted background
 
 function bite(x,y){ // Bite Mark 
   noStroke();
-  fill(255);
+  fill(0);
   circle(x,y, 50);
   circle(x-30, y +20, 50);
   circle(x+30, y +15, 50);
@@ -215,8 +215,11 @@ function keyPressed(){ //Changes Scene
   if (scene ==2){ //resets background before scene 2
     background(0);
   }
-  if (scene > 4){
+  if (scene ==3){ //resets background before scene 2
+    background(0);
+    berry.huge(); // makes the berry part of the background so bites can overlap it
+  }
+  if (scene > 3 ){
     scene = 1;// resets to first scene
   }
 }
-//  rotate(random(6.28));
